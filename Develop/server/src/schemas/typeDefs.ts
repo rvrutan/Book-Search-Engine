@@ -9,16 +9,20 @@ type Book {
 }
 
 type User {
-  id: ID!
+  _id: ID!
   username: String!
   email: String!
-  password: String!
   savedBooks: [Book]
   bookCount: Int
 }
 
+type Auth {
+  token: ID!
+  user: User
+}
+
 type Query {
-  users: [users]
+  me: User
   getUser(username: String!): User
 }
 
@@ -36,11 +40,6 @@ input BookInput {
   image: String
   link: String
   title: String!
-}
-
-type Auth {
-  token: ID!
-  user: User
 }
 `;
 
