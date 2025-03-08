@@ -99,80 +99,78 @@ const SearchBooks = () => {
   };
 
   return (
-<>
-  <div className="bg-dark text-light py-5">
-    <Container>
-      <h1 className="display-4 text-center">Search for Books!</h1>
-      <Form onSubmit={handleFormSubmit} className="mt-4">
-        <Row className="align-items-center">
-          <Col xs={12} md={8} className="mb-3 mb-md-0">
-            <Form.Control
-              name="searchInput"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              type="text"
-              size="lg"
-              placeholder="Search for a book"
-              className="shadow-sm"
-            />
-          </Col>
-          <Col xs={12} md={4}>
-            <Button type="submit" variant="success" size="lg" block>
-              Submit Search
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    </Container>
-  </div>
-
-  <Container className="my-5">
-    <h2 className="text-center">
-      {searchedBooks.length
-        ? `Viewing ${searchedBooks.length} results:`
-        : 'Search for a book to begin'}
-    </h2>
-
-    <Row className="mt-4">
-      {searchedBooks.map((book) => (
-        <Col md={4} key={book.bookId} className="mb-4">
-          <Card className="h-100 shadow-sm border-dark">
-            {book.image && (
-              <Card.Img
-                src={book.image}
-                alt={`The cover for ${book.title}`}
-                className="card-img-top"
-              />
-            )}
-            <Card.Body className="d-flex flex-column">
-              <Card.Title className="text-center mb-3">{book.title}</Card.Title>
-              <p className="text-muted small text-center">Authors: {book.authors}</p>
-              <Card.Text className="flex-grow-1">{book.description}</Card.Text>
-
-              {Auth.loggedIn() && (
-                <Button
-                  disabled={savedBookIds?.some(
-                    (savedBookId: string) => savedBookId === book.bookId
-                  )}
-                  variant="info"
-                  className="mt-3"
-                  onClick={() => handleSaveBook(book.bookId)}
-                  block
-                >
-                  {savedBookIds?.some(
-                    (savedBookId: string) => savedBookId === book.bookId
-                  )
-                    ? 'This book has already been saved!'
-                    : 'Save this Book!'}
+    <>
+      <div className="text-light bg-dark p-5">
+        <Container>
+          <h1>Search for Books!</h1>
+          <Form onSubmit={handleFormSubmit}>
+            <Row>
+              <Col xs={12} md={8}>
+                <Form.Control
+                  name="searchInput"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  type="text"
+                  size="lg"
+                  placeholder="Search for a book"
+                />
+              </Col>
+              <Col xs={12} md={4}>
+                <Button type="submit" variant="success" size="lg">
+                  Submit Search
                 </Button>
-              )}
-            </Card.Body>
-          </Card>
-        </Col>
-      ))}
-    </Row>
-  </Container>
-</>  );
+              </Col>
+            </Row>
+          </Form>
+        </Container>
+      </div>
+
+      <Container>
+        <h2 className="pt-5">
+          {searchedBooks.length
+            ? `Viewing ${searchedBooks.length} results:`
+            : "Search for a book to begin"}
+        </h2>
+        <Row>
+          {searchedBooks.map((book) => {
+            return (
+              <Col md="4" key={book.bookId}>
+                <Card border="dark">
+                  {book.image ? (
+                    <Card.Img
+                      src={book.image}
+                      alt={`The cover for ${book.title}`}
+                      variant="top"
+                    />
+                  ) : null}
+                  <Card.Body>
+                    <Card.Title>{book.title}</Card.Title>
+                    <p className="small">Authors: {book.authors}</p>
+                    <Card.Text>{book.description}</Card.Text>
+                    {Auth.loggedIn() && (
+                      <Button
+                        disabled={savedBookIds?.some(
+                          (savedBookId: string) => savedBookId === book.bookId
+                        )}
+                        className="btn-block btn-info"
+                        onClick={() => handleSaveBook(book.bookId)}
+                      >
+                        {savedBookIds?.some(
+                          (savedBookId: string) => savedBookId === book.bookId
+                        )
+                          ? "This book has already been saved!"
+                          : "Save this Book!"}
+                      </Button>
+                    )}
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
+        </Row>
+      </Container>
+    </>
+  );
 };
 
 export default SearchBooks;
