@@ -11,7 +11,9 @@ const SavedBooks = () => {
   const userData = data?.me || {};
 
   // Set up the remove book mutation
-  const [removeBook] = useMutation(REMOVE_BOOK);
+  const [removeBook] = useMutation(REMOVE_BOOK, {
+    refetchQueries: [{ query: GET_ME }], // Refetch GET_ME after mutation
+  });
 
   // Handle book deletion
   const handleDeleteBook = async (bookId: string) => {
@@ -22,7 +24,7 @@ const SavedBooks = () => {
     }
 
     try {
-      const { data } = await removeBook({
+      await removeBook({
         variables: { bookId },
       });
 
