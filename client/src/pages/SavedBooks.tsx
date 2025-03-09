@@ -6,16 +6,13 @@ import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
 const SavedBooks = () => {
-  // Fetch user data using Apollo Client
   const { loading, data } = useQuery(GET_ME);
   const userData = data?.me || {};
 
-  // Set up the remove book mutation
   const [removeBook] = useMutation(REMOVE_BOOK, {
-    refetchQueries: [{ query: GET_ME }], // Refetch GET_ME after mutation
+    refetchQueries: [{ query: GET_ME }],
   });
 
-  // Handle book deletion
   const handleDeleteBook = async (bookId: string) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -28,14 +25,12 @@ const SavedBooks = () => {
         variables: { bookId },
       });
 
-      // Remove book ID from localStorage upon success
       removeBookId(bookId);
     } catch (err) {
       console.error(err);
     }
   };
 
-  // If data isn't here yet, show loading message
   if (loading) {
     return <h2>LOADING...</h2>;
   }
@@ -72,9 +67,15 @@ const SavedBooks = () => {
                     />
                   ) : null}
                   <Card.Body className="d-flex flex-column">
-                    <Card.Title className="text-center mb-3">{book.title}</Card.Title>
-                    <p className="text-muted small text-center">Authors: {book.authors}</p>
-                    <Card.Text className="flex-grow-1">{book.description}</Card.Text>
+                    <Card.Title className="text-center mb-3">
+                      {book.title}
+                    </Card.Title>
+                    <p className="text-muted small text-center">
+                      Authors: {book.authors}
+                    </p>
+                    <Card.Text className="flex-grow-1">
+                      {book.description}
+                    </Card.Text>
                     <Button
                       className="btn-block btn-danger"
                       onClick={() => handleDeleteBook(book.bookId)}

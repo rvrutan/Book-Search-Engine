@@ -5,20 +5,31 @@ import { signToken } from "../services/auth.js";
 const resolvers = {
   Query: {
     // Resolving the 'me' query to return the currently logged-in user
-    me: async (_parent: any, _args: any, context: any): Promise<UserDocument | null> => {
+    me: async (
+      _parent: any,
+      _args: any,
+      context: any
+    ): Promise<UserDocument | null> => {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate("savedBooks");
       }
       throw new AuthenticationError("You need to be logged in");
     },
     // Resolving the 'getUser' query to get a user by username
-    getUser: async (_parent: any, { username }: { username: string }): Promise<UserDocument | null> => {
+    getUser: async (
+      _parent: any,
+      { username }: { username: string }
+    ): Promise<UserDocument | null> => {
       return User.findOne({ username }).populate("savedBooks");
     },
   },
+
   Mutation: {
     // Mutation for logging in
-    login: async (_parent: any, { email, password }: { email: string; password: string }): Promise<{ token: string; user: UserDocument } | null> => {
+    login: async (
+      _parent: any,
+      { email, password }: { email: string; password: string }
+    ): Promise<{ token: string; user: UserDocument } | null> => {
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -34,14 +45,27 @@ const resolvers = {
       const token = signToken(user.username, user.email, user._id);
       return { token, user };
     },
+
     // Mutation for registering a new user
-    addUser: async (_parent: any, { username, email, password }: { username: string; email: string; password: string }): Promise<{ token: string; user: UserDocument } | null> => {
+    addUser: async (
+      _parent: any,
+      {
+        username,
+        email,
+        password,
+      }: { username: string; email: string; password: string }
+    ): Promise<{ token: string; user: UserDocument } | null> => {
       const user = await User.create({ username, email, password });
       const token = signToken(user.username, user.email, user._id);
       return { token, user };
     },
+
     // Mutation for saving a book to the user's savedBooks
-    saveBook: async (_parent: any, { bookData }: { bookData: any }, context: any): Promise<UserDocument | null> => {
+    saveBook: async (
+      _parent: any,
+      { bookData }: { bookData: any },
+      context: any
+    ): Promise<UserDocument | null> => {
       if (context.user) {
         return User.findOneAndUpdate(
           { _id: context.user._id },
@@ -51,8 +75,13 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+
     // Mutation for removing a book from the user's savedBooks
-    removeBook: async (_parent: any, { bookId }: { bookId: string }, context: any): Promise<UserDocument | null> => {
+    removeBook: async (
+      _parent: any,
+      { bookId }: { bookId: string },
+      context: any
+    ): Promise<UserDocument | null> => {
       if (context.user) {
         return User.findOneAndUpdate(
           { _id: context.user._id },

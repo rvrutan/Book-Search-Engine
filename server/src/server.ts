@@ -18,8 +18,8 @@ const app = express();
 const startApolloServer = async () => {
   try {
     await server.start();
-    await db; // Await the database connection
-
+    await db;
+    
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());
 
