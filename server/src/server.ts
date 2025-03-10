@@ -15,19 +15,6 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// test2
-const mongoose = require('mongoose');
-
-const MONGODB_URI = process.env.MONGODB_URI 
-
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-module.exports = mongoose.connection;
-
-
 
 const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
