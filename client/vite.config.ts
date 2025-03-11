@@ -10,7 +10,7 @@ import { defineConfig, loadEnv } from 'vite'
    plugins: [react()],
    server: {
      allowedHosts: ["library-6iwq.onrender.com"],
-     port: process.env.PORT || 3001,
+     port: process.env.PORT || 3000,
      open: true,
      proxy: {
        '/graphql': {
