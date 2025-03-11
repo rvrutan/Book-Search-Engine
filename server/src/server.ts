@@ -16,7 +16,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 
-const PORT = process.env.PORT || 3001;
+
+// Convert PORT to a number
+const PORT = parseInt(process.env.PORT as string, 10) || 3001;
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -46,7 +49,7 @@ const startApolloServer = async () => {
         res.sendFile(path.join(__dirname, "../client/dist/index.html"));
       });
     }
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`API server running on port ${PORT}!`);
       console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
     });
