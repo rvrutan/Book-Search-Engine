@@ -9,6 +9,7 @@ export default ({ mode }) => {
 return defineConfig({
   plugins: [react()],
   server: {
+    allowedHosts: ["library-6iwq.onrender.com"],
     port: process.env.PORT || 3001,
     open: true,
     proxy: {
