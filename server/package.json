@@ -7,7 +7,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "watch": "nodemon dist/server.js",
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "watch": "tsc -w",
+    "postinstall": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
