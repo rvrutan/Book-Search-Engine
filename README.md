@@ -11,45 +11,12 @@ This project refactors an existing book search engine application from a RESTful
 ## Table of Contents
 
 - [Description](#description)
-- [Installation](#installation)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
 - [Screenshots](#screenshots)
 - [Contributing](#contributing)
 - [License](#license)
 - [Questions](#questions)
-
-## Installation
-
-1.  Clone the repository to your local machine:
-
-    ```bash
-    git clone [YOUR_REPOSITORY_URL]
-    ```
-
-2.  Navigate to the project directory:
-
-    ```bash
-    cd [YOUR_PROJECT_DIRECTORY]
-    ```
-
-3.  Install the dependencies:
-
-    ```bash
-    npm install
-    ```
-
-4.  Set up your MongoDB Atlas connection string in a `.env` file at the root of your project:
-
-    ```
-    MONGODB_URI=your_mongodb_atlas_connection_string
-    ```
-
-5.  Run the application:
-
-    ```bash
-    npm run develop
-    ```
 
 ## Usage
 
