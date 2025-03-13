@@ -13,7 +13,6 @@ This project refactors an existing book search engine application from a RESTful
 - [Description](#description)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
-- [Screenshots](#screenshots)
 - [Contributing](#contributing)
 - [License](#license)
 - [Questions](#questions)
@@ -45,10 +44,6 @@ This project refactors an existing book search engine application from a RESTful
     -   GraphQL
     -   Apollo Server
     -   JSON Web Tokens (JWT) for authentication
-
-## Screenshots
-
-(Add your screenshots here after you take them)
 
 ## Contributing
 
