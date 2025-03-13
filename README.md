@@ -102,4 +102,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have any questions, please feel free to contact me:
 
 -   GitHub: [Github](https://github.com/rvrutan)
--   Email: [rutanroni@gmail.com]
+-   Email: [rutanroni@gmail.com](rutanroni@gmail.com)
