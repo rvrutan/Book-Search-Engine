@@ -4,7 +4,7 @@ import { Form, Button, Alert } from "react-bootstrap";
 
 import Auth from "../utils/auth";
 import type { User } from "../models/User";
-import { useMutation } from "@apollo/client";
+import { useMutation, ApolloError } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 
 const SignupForm = ({}: { handleModalClose: () => void }) => {
@@ -17,6 +17,7 @@ const SignupForm = ({}: { handleModalClose: () => void }) => {
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [addUser] = useMutation(ADD_USER);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -30,21 +31,24 @@ const SignupForm = ({}: { handleModalClose: () => void }) => {
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+      return;
     }
 
     try {
-      const { data, errors } = await addUser({
+      const { data } = await addUser({
         variables: { ...userFormData },
       });
 
-      if (errors) {
-        throw new Error("something went wrong!");
-      }
 
       Auth.login(data.addUser.token);
-    } catch (err) {
-      console.error(err);
+    } catch (err: unknown) {
+      console.error("Signup error:", err);
       setShowAlert(true);
+      if (err instanceof ApolloError && err.graphQLErrors?.[0]?.message) {
+        setErrorMessage(err.graphQLErrors[0].message);
+      } else {
+        setErrorMessage("Something went wrong with your signup!");
+      }
     }
 
     setUserFormData({
