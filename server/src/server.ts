@@ -1,23 +1,15 @@
 import express from "express";
 import path from "node:path";
 import type { Request, Response } from "express";
+// Import the ApolloServer class
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { authenticateToken } from "./services/auth.js";
+// Import the two parts of a GraphQL schema
 import { typeDefs, resolvers } from "./schemas/index.js";
 import db from "./config/connection.js";
 
-// test
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-
-// Define __dirname in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// Convert PORT to a number
-const PORT = parseInt(process.env.PORT as string, 10) || 3001;
-
+const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -25,44 +17,34 @@ const server = new ApolloServer({
 
 const app = express();
 
+// Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
-  try {
-    await server.start();
-    await db;
+  await server.start();
+  await db;
 
-    app.use(express.urlencoded({ extended: false }));
-    app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use(express.json());
 
-    app.use(
-      "/graphql",
-      expressMiddleware(server as any, {
-        context: authenticateToken as any,
-      })
-    );
+  app.use(
+    "/graphql",
+    expressMiddleware(server as any, {
+      context: authenticateToken as any,
+    })
+  );
 
-    if (process.env.NODE_ENV === "production") {
-      // Serve static files from the React app
-      const clientPath = path.join(__dirname, "../../client/dist");
-      app.use(express.static(clientPath));
+  if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../client/dist")));
 
-      // Handle React routing, return all requests to React app
-      app.get("*", (_req: Request, res: Response) => {
-        try {
-          const indexPath = path.join(clientPath, "index.html");
-          res.sendFile(indexPath);
-        } catch (error) {
-          console.error("Error serving index.html:", error);
-          res.status(500).send("Error serving application");
-        }
-      });
-    }
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`API server running on port ${PORT}!`);
-      console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
+    app.get("*", (_req: Request, res: Response) => {
+      res.sendFile(path.join(__dirname, "../client/dist/index.html"));
     });
-  } catch (error) {
-    console.error("Server startup error:", error);
   }
+
+  app.listen(PORT, () => {
+    console.log(`API server running on port ${PORT}!`);
+    console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
+  });
 };
 
+// Call the async function to start the server
 startApolloServer();
