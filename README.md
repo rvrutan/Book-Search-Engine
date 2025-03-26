@@ -86,6 +86,9 @@ This project refactors an existing book search engine application from a RESTful
     -   JSON Web Tokens (JWT) for authentication
 
 ## Screenshots/Demo
+![Screenshot 2025-03-25 at 8 40 01 PM](https://github.com/user-attachments/assets/f465f43d-e903-463a-8f13-d85052db0769)
+![Screenshot 2025-03-25 at 8 42 28 PM](https://github.com/user-attachments/assets/6c752bcd-0d81-4cb1-b6bc-b3bc7c9b0d33)
+![Screenshot 2025-03-25 at 8 42 11 PM](https://github.com/user-attachments/assets/22c1fdfe-b968-45c4-961f-306138535e84)
 
 
 ## Contributing
