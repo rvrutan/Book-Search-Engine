@@ -24,13 +24,13 @@ This project refactors an existing book search engine application from a RESTful
 1.  Clone the repository to your local machine:
 
     ```bash
-    git clone [YOUR_REPOSITORY_URL]
+    git clone [https://github.com/rvrutan/Book-Search-Engine]
     ```
 
 2.  Navigate to the project directory:
 
     ```bash
-    cd [YOUR_PROJECT_DIRECTORY]
+    cd [Book-Search-Engine]
     ```
 
 3.  Install the dependencies:
@@ -87,7 +87,6 @@ This project refactors an existing book search engine application from a RESTful
 
 ## Screenshots/Demo
 
-(Add your screenshots or a link to a demo video here after you take them)
 
 ## Contributing
 
